@@ -105,7 +105,7 @@ function App() {
         <h3>CRUD OPERATION USING EMPLOYEE DETAIL</h3>
         <div className="input-search">
           <input type="search" placeholder='Search text here...' onChange={handleSearchChange} />
-          <button className='btn green' onClick={openModal}>Add Student</button>
+          <button className='btn green' onClick={openModal}>Add Employee</button>
         </div>
 
         <table className="table">
