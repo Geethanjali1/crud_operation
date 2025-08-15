@@ -10,7 +10,7 @@ function App() {
   const[userDetails, setuserDetails] = useState({name:"", age:"", city:"", contact:""});
 
   const getAllUsers = async () => {
-    await axios.get("https://student-a6gh.onrender.com/student").then(
+    await axios.get("https://student-crud-nest.vercel.app/student/").then(
       (res) => {
         console.log(res.data);
         setUsers(res.data);
@@ -42,7 +42,7 @@ function App() {
 
     if(isConfirmed)
     {
-      await axios.delete(`https://student-a6gh.onrender.com/student/${userId}`).then
+      await axios.delete(`https://student-crud-nest.vercel.app/student/${userId}`).then
       ((res) => {
           console.log(res.data);
           const deletedUser = res.data;
@@ -64,7 +64,7 @@ function App() {
   };
 
 
-  // -------------------------------  Add User Details  ------------------------------------ //
+  // -------------------------------  Add User Details (POST)  ------------------------------------ //
 
   const handleData = (e) => {
     setuserDetails({...userDetails, [e.target.name]: e.target.value});
@@ -73,12 +73,29 @@ function App() {
   const handleSumbit = async (e) => {
     e.preventDefault();
 
-    await axios.post("https://student-a6gh.onrender.com/student", userDetails).then(
-      (res) => {
-        console.log(res.data);
-        setuserDetails({name:"", age:"", city:"", contact:""});
-      } 
-    );
+    if(userDetails._id)
+    {
+      await axios.put(`https://student-crud-nest.vercel.app/student/${userDetails._id}`, userDetails).then(
+        (res) => {
+          console.log(res.data);
+          setuserDetails({name:"", age:"", city:"", contact:""});
+        } 
+      );
+    }
+    else{
+      await axios.post("https://student-crud-nest.vercel.app/student/", userDetails).then(
+        (res) => {
+          console.log(res.data);
+          setuserDetails({name:"", age:"", city:"", contact:""});
+        } 
+      );
+    }
+    
+  };
+
+  const handleUpdate = (user) => {
+    setModalOpen(true);
+    setuserDetails(user);
   };
 
   return (
@@ -113,7 +130,7 @@ function App() {
                   <td>{user.age}</td>
                   <td>{user.city}</td>
                   <td>{user.contact}</td>
-                  <td><button className='btn green'>Edit</button></td>
+                  <td><button className='btn green' onClick={() => handleUpdate(user)}>Edit</button></td>
                   <td><button className='btn red' onClick={() => handleDelete(user._id)}>Delete</button></td>
                 </tr>
               );

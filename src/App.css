@@ -27,7 +27,7 @@ h3 {
     border-radius: 4px;
     background-color: #ccc;
     cursor: pointer;
-
+    
 }
 
 .green {
@@ -78,6 +78,11 @@ h3 {
 .table td {
     border: 1px solid #ddd;
     padding: 8px;
+}
+
+
+.table td:nth-last-child(-n + 2){
+    text-align: center;
 }
 
 .table th {
